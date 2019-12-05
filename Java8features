@@ -1,0 +1,57 @@
+	   **************** Java 8 Features****************
+
+1) forEach() Method:
+
+  -It is defined in Iterable and Stream interface.
+  -Collection classes which extends Iterable interface can use forEach loop to iterate elements.
+  -example:
+
+	=>  gamesList.forEach(games -> System.out.println(games));
+
+  -There is also a method called forEachOrdered() which performs operation on stream w.r.t. the encounter order of the stream. While forEach() is does not guarantee the order.
+
+  -link => https://howtodoinjava.com/java8/java-stream-foreachordered/
+
+
+
+2) Lambda Expressions:
+
+  -It is used to provide the implementation for functional interfaces.
+  -syntax, 
+
+	(argument-list) -> {body}
+
+  -example:
+
+	=>  interface Addable{  
+		int add(int a,int b);  
+	     }
+	Addable ad1=(a,b)->(a+b);  
+        System.out.println(ad1.add(10,20));
+
+  -link => https://www.javatpoint.com/java-lambda-expressions
+
+
+3)Method References:
+
+  -It is a special type of lambda function.
+
+   A)Reference to static method:
+  
+	List<String> messages = Arrays.asList("hello", "baeldung", "readers!");
+
+	with lambda expression =>
+	 messages.forEach(word -> StringUtils.capitalize(word));
+	
+	with method reference =>
+	 messages.forEach(StringUtils::capitalize);
+
+   B)Reference to an Instance Method:
+   C)Reference to a Constructor:
+
+  -link => https://www.baeldung.com/java-method-references
+
+
+
+4)Functional Interfaces:
+
