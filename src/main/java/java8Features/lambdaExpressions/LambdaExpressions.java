@@ -14,3 +14,9 @@ public class LambdaExpressions {
 }
 
 //  link => https://www.javatpoint.com/java-lambda-expressions
+
+/*
+* output :
+* 30
+* 300
+*/
