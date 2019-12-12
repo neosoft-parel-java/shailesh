@@ -20,6 +20,7 @@ public class TestStream {
         Stream flatStream = stream.flatMap(s -> s.stream());
         flatStream.forEach(System.out::println);
 
+
 //        List<Director> directors = new ArrayList<>();
 //        Map<Director, Genre> genres = new HashMap<>();
 //        Stream<Map<Director, Genre>> stream = directors

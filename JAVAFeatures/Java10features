@@ -1,0 +1,101 @@
+							**  JAVA 10 Features **
+
+1. Use of "var":
+	-compiler will resolve the exact type of the object that a variable is initialized with
+
+*Example:
+	public class Test {
+  		public static void main(String args[]) {
+        
+       	//As local variable
+      			var a="Hello";
+			System.out.prinln(a);
+        //As Array
+			var array =new String[]{"hello","hii"};	
+
+    		 	List<String> list=new ArrayList<>();
+			list.add("hii");
+			list.add("hello");
+			list.add("welcome");
+        
+	//As index of enhanced for loop
+			for (var temp : list) {
+			        System.out.println(temp);
+    			}
+        
+	//As index of locale variable in loop
+			for (var i=0;i<list.length();i++){
+				System.out.println(list.get(i));
+			}
+	
+	//Throws error: 'var' is not allowed here
+	//Cannot be used as method parameter
+			void print(var a){
+				System.out.println(a);
+			}
+		}
+	}
+
+
+2.API Changes
+
+*Few additions are:
+
+I.	List, Map & Set Interfaces are added with a static "copyOf(Collection)" method. 
+	Its returns an unmodifiable List, Map or Set containing the entries provided. 
+	
+II.	Collectors class gets various methods for collecting unmodifiable collections (Set, List, Map)
+	Collectors.toUnmodifiableList/toUnmodifiableSet/toUnmodifiableMap
+
+III.	A new overloaded version of Optional.orElseThrow() which doesn’t take any parameters and 
+	throws NoSuchElementException by default.
+
+*Example
+
+	public class Test{
+
+	public static void main(String args[]){
+		List<String> actors=new ArrayList();
+		actors.add("Ajay");
+		actors.add("Akshay");
+		System.out.println(actors);  //[Ajay, Akshay]
+
+	//Creates an UnModifiable List
+		List<String> copyActors=List.copyOf(actors);
+		System.out.println(copyActors);  //[Ajay, Akshay]
+
+		copyActors.add("Sharukh");  //Runtime Exception (UnsupportedOperationException)
+
+		actors.add("Sharukh");
+		System.out.println(actors);  //[Ajay, Akshay, Sharukh]
+		System.out.println(copyActors);  //[Ajay, Akshay]
+
+	//New added API : Collectors.toUnmodifiableList
+		List<String> copy = actors.stream().collect(Collectors.toUnmodifiableList());
+		copy.add("John");  //Runtime Exception (UnsupportedOperationException)
+
+	}
+}
+
+3. Parallel G1GC:
+
+	For G1GC, if concurrent collections couldn’t reclaim memory quickly enough,then performance would get hampered,hence changed to parallel G1GC. This change improves the G1 worst-case latency by making the full GC parallel. The mark-sweep-compact algorithm from G1 collector is parallelized as part of this change and will be triggered when concurrent threads for collection can’t revive the memory fast enough.
+[The Garbage-First (G1) garbage collector is targeted for multiprocessor machines with a large amount of memory. It attempts to meet garbage collection pause-time goals with high probability while achieving high throughput with little need for configuration.]
+
+4. Garbage-Collector Interface:
+
+	This change provides better modularity to the Internal GC Code. It will help in future for adding new GC without changing existing codebase, also help in removing or housekeeping of previous GC.
+
+5. Additional Unicode Language-Tag Extensions:
+
+	As of Java SE 9, the supported BCP 47 U language-tag extensions are ca and nu. This JEP will add support for the following additional extensions:
+
+		-cu (currency type)
+		-fw (first day of week)
+		-rg (region override)
+		-tz (time zone)
+
+
+
+
+

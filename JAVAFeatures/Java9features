@@ -1,0 +1,134 @@
+							** JAVA 9 features **
+
+1) JAVA Shell (jshell)-
+e.g.:-
+jshell> int a = 10
+a ==> 10
+
+jshell> System.out.println("a value = " + a )
+a value = 10
+
+
+2) Project Jigsaw (Modularization)
+
+e.g.:-
+- com.codete.demo.front (Module 1)
+	-com.codete.demo.front(package)
+		-PricePresenter.java
+	-module-info.java
+
+- com.codete.demo.services (Module 2)
+	-com.codete.demo.services (package)
+		-Price
+			-PriceService.java
+		-Quantity
+			-QuatityService.java
+	-module-info.java
+
+A) Exports :
+We want to expose only price package to third-party modules and keep quantity private. 
+What we need to do is to define it in module-info.java file [of module 2]:
+
+		module com.codete.demo.services {
+		    exports com.codete.demo.services.price;
+		}
+	
+B) Requires :
+Class PricePresenter is defined in com.codete.demo.front module and requires PriceService defined in com.codete.demo.service, 
+so we need to reflect it in module-info.java file [of module 1]:
+
+		module com.codete.demo.front {
+		    requires  com.codete.demo.services;
+		}
+
+3) Immutable List ,Set, Map :
+	In JAVA 8,if we want to create an Immutable List, then we can use Collections.unmodifiableList method.
+In JAVA 9, List and Set interfaces have “of()” methods to create an empty or non-empty Immutable List or Set objects   
+
+-- List : 
+	e.g 
+	List immutableList = List.of("one","two","three"); 
+	//immutableList ==> [one, two, three]
+
+--Set:
+	e.g. Set immutableList = Set.of("one","two","three");
+	//immutableList ==> [one, two, three]
+
+--Map:
+	e.g.
+	Map immutableMap =  Map.of("a",1,"b",2);
+	//immutableMap ==> {a=1, b=2}
+
+//NO ADD REMOVE OPERATIONS ALLOWED 
+
+
+4) Private Methods in interface
+
+Example:-
+
+	interface Parent{
+		private void hello() {
+	//Set of operations needed for both print1 and print2		
+	System.out.println("Interface private hello method");
+		}
+		default void print1() {
+			hello();
+		//Some other operations
+		}
+
+		default void print2() {
+			hello();
+		//Some other operations
+		}
+
+
+	}
+
+	class Child implements Parent{
+		
+	}
+
+	public class Demo{
+		public static void main(){
+			Parent p=new Child();
+			p.print1();			//Interface private hello method
+		}
+	}
+
+5) Added extra methods in Optional class
+
+a) ifPresentOrElse(Consumer<? super T> action, Runnable emptyAction) - If a value is present, performs the given action with the value, otherwise performs the given empty-based action
+
+b) or(Supplier<? extends Optional<? extends T>> supplier)  - If value is present, method will return Optional describing the value, otherwise returns an Optional produced by the supplying function
+
+c) stream() - returns a sequential {@link Stream} containing only that value, otherwise returns an empty {@code Stream}.
+
+6) Compact String:
+	Till Java 8, String in java were internally represented by char[].
+	Each char is stored in 2 bytes in memory. JDK developers at oracle analyzed
+	lots of client’s application heap dumps and they noticed that most of the strings can be represented
+	only using Latin-1 characters set. A latin-1 char can be stored in one byte, which is 50% (1 byte)
+	less than char data type storage.
+	So, the JDK developers defaulted the String classes internal storage to byte[] from char[].
+	This has resulted in saving of lots of space in heap memory because string objects
+	take up really big portion of heap memory, generally. [Source]
+	You can control the usage of this feature in your application using
+	-XX:-CompactStrings parameters to java command.
+
+	Before Java 9 : private final char value[];
+	After Java 9 : private final byte[] value;
+
+
+7) LocalDate.dateUntil():
+	
+	*This method is introduced to stream LocalDate instances.
+	*There are mainly two methods:
+		a) Stream<LocalDate> datesUntil(LocalDate end)
+		b) Stream<LocalDate> datesUntil(LocalDate end, Period step)
+	*The first version (i.e. without a Period) internally calls the second method with 		Period.ofDays(1) and generates stream of dates with difference of 1 day in between.
+
+	example:
+		start_date.datesUntil(end_date).collect(Collectors.toList());
+
+		start.datesUntil(end, Period.ofWeeks(1)).collect(Collectors.toList());
+

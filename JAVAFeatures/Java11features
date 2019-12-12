@@ -1,0 +1,19 @@
+							**  JAVA 11 Features **
+
+1. String new methods :
+
+	String.isBlank();	//returns true or false
+	String.strip();  	//removes blank space
+	String.stripTrailing(); //removes blank space in the end
+	String.stripLeading();  //removes blank space in the begining
+	String.repeat(3);       //repeats string for specified no. of times
+	String.lines().count(); //counts number of lines in given string
+
+2. Stream new methods :
+
+	Stream.ofNullable(null).count()
+	// 0
+	Stream.of(1, 2, 3, 2, 1).dropWhile(n -> n < 3).collect(Collectors.toList());
+	// [3, 2, 1]
+	Stream.of(1, 2, 3, 2, 1).takeWhile(n -> n < 3).collect(Collectors.toList());
+	// [1, 2]

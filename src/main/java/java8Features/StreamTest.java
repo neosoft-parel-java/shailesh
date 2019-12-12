@@ -114,6 +114,32 @@ public class StreamTest {
                 .flatMap(strList -> strList.stream());
 
         flatStream.forEach(System.out::println);
+
+        /*
+        Convert Stream to List
+        Type 1:
+         */
+        List<Integer> list = new ArrayList<>();
+        for(int j = 1; j< 10; j++){
+            list.add(i);
+        }
+        Stream<Integer> stream = list.stream();
+        List<Integer> evenNumbersList = stream
+                .filter(j -> j%2 == 0)
+                .collect(Collectors.toList());
+        System.out.print(evenNumbersList);
+
+        /*
+        Convert Stream to array
+        Type 2:
+         */
+        List<Integer> list1 = new ArrayList<>();
+        for(int a = 1; a< 10; a++){
+            list1.add(a);
+        }
+        Stream<Integer> stream1 = list.stream();
+        Integer[] evenNumbersArr = stream1.filter(a -> a%2 == 0).toArray(Integer[]::new);
+        System.out.print(evenNumbersArr);
     }
 }
 
