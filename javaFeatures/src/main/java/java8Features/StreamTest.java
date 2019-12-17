@@ -30,7 +30,7 @@ public class StreamTest {
         System.out.println("Iterating values using Stream");
         Stream.iterate(1, c -> c+1)
                 .filter(no->no%3==0)
-                .limit(5)
+                .limit(6)
                 .forEach(System.out::println);
 
         //List Concatenation using Stream
@@ -140,6 +140,11 @@ public class StreamTest {
         Stream<Integer> stream1 = list.stream();
         Integer[] evenNumbersArr = stream1.filter(a -> a%2 == 0).toArray(Integer[]::new);
         System.out.print(evenNumbersArr);
+
+        Optional<String> reduced = li.stream()
+                .reduce((s1,s2) -> s1 + "#" + s2);
+
+        reduced.ifPresent(System.out::println);
     }
 }
 

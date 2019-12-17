@@ -80,40 +80,37 @@ Example:-
 			hello();
 		//Some other operations
 		}
-
-
 	}
-
 	class Child implements Parent{
-		
-	}
-
-	public class Demo{
-		public static void main(){
-			Parent p=new Child();
-			p.print1();			//Interface private hello method
-		}
+        public class Demo{
+            public static void main(){
+                Parent p=new Child();
+                p.print1();			//Interface private hello method
+            }
+        }
 	}
 
 5) Added extra methods in Optional class
 
-a) ifPresentOrElse(Consumer<? super T> action, Runnable emptyAction) - If a value is present, performs the given action with the value, otherwise performs the given empty-based action
+a) ifPresentOrElse(Consumer<? super T> action, Runnable emptyAction) - If a value is present,
+ performs the given action with the value, otherwise performs the given empty-based action
 
-b) or(Supplier<? extends Optional<? extends T>> supplier)  - If value is present, method will return Optional describing the value, otherwise returns an Optional produced by the supplying function
+b) or(Supplier<? extends Optional<? extends T>> supplier)  - If value is present,
+method will return Optional describing the value, otherwise returns an Optional produced by the supplying function
 
 c) stream() - returns a sequential {@link Stream} containing only that value, otherwise returns an empty {@code Stream}.
 
 6) Compact String:
-	Till Java 8, String in java were internally represented by char[].
-	Each char is stored in 2 bytes in memory. JDK developers at oracle analyzed
-	lots of client’s application heap dumps and they noticed that most of the strings can be represented
-	only using Latin-1 characters set. A latin-1 char can be stored in one byte, which is 50% (1 byte)
-	less than char data type storage.
-	So, the JDK developers defaulted the String classes internal storage to byte[] from char[].
-	This has resulted in saving of lots of space in heap memory because string objects
-	take up really big portion of heap memory, generally. [Source]
-	You can control the usage of this feature in your application using
-	-XX:-CompactStrings parameters to java command.
+	-- Till Java 8, String in java were internally represented by char[].
+	-- Each char is stored in 2 bytes in memory. JDK developers at oracle analyzed
+        lots of client’s application heap dumps and they noticed that most of the strings can be represented
+        only using Latin-1 characters set. A latin-1 char can be stored in one byte, which is 50% (1 byte)
+        less than char data type storage.
+	-- So, the JDK developers defaulted the String classes internal storage to byte[] from char[].
+	-- This has resulted in saving of lots of space in heap memory because string objects
+        take up really big portion of heap memory, generally.
+	--You can control the usage of this feature in your application using
+        -XX:-CompactStrings parameters to java command.
 
 	Before Java 9 : private final char value[];
 	After Java 9 : private final byte[] value;
@@ -125,7 +122,8 @@ c) stream() - returns a sequential {@link Stream} containing only that value, ot
 	*There are mainly two methods:
 		a) Stream<LocalDate> datesUntil(LocalDate end)
 		b) Stream<LocalDate> datesUntil(LocalDate end, Period step)
-	*The first version (i.e. without a Period) internally calls the second method with 		Period.ofDays(1) and generates stream of dates with difference of 1 day in between.
+	*The first version (i.e. without a Period) internally calls the second method with
+	Period.ofDays(1) and generates stream of dates with difference of 1 day in between.
 
 	example:
 		start_date.datesUntil(end_date).collect(Collectors.toList());
